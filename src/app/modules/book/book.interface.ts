@@ -3,7 +3,7 @@ export type Reviews = {
   review: string;
 };
 
-export type IUser = {
+export type IBook = {
   title: string;
   author: string;
   genre: string;
