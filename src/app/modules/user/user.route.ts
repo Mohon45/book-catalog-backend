@@ -5,10 +5,15 @@ import { UserController } from './user.controller';
 import { UserValidation } from './user.validation';
 const router = express.Router();
 
-export const AuthRoute = router.post(
+router.post(
   '/signup',
   validateRequest(UserValidation.createUserZodSchema),
   UserController.createUser
+);
+router.post(
+  '/login',
+  validateRequest(UserValidation.loginUserZodSchema),
+  UserController.loginUser
 );
 router.get('/:id', auth(), UserController.getSingleUser);
 

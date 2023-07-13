@@ -6,6 +6,18 @@ export type UserName = {
   lastName: string;
 };
 
+export type ILoginUser = {
+  userName: string;
+  password: string;
+};
+export type ILoginUserResponse = {
+  userName: string;
+  _id: string;
+  email: string;
+  accessToken: string;
+  refreshToken?: string;
+};
+
 export type IUser = {
   userName: string;
   password: string;
@@ -19,7 +31,7 @@ export type IUser = {
 export type UserModel = {
   isUserExist(
     userName: string
-  ): Promise<Pick<IUser, '_id' | 'userName' | 'password'>>;
+  ): Promise<Pick<IUser, '_id' | 'userName' | 'password' | 'email'>>;
   isPasswordMatched(
     givenPassword: string,
     savedPassword: string

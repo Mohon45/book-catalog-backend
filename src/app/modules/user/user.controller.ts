@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { IUser } from './user.interface';
+import { ILoginUserResponse, IUser } from './user.interface';
 import { UserService } from './user.service';
 
 const createUser = catchAsync(async (req: Request, res: Response) => {
@@ -14,6 +14,37 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User Registration successfully',
+    data: result,
+  });
+});
+
+const loginUser = catchAsync(async (req: Request, res: Response) => {
+  const { ...loginData } = req.body;
+  const result = await UserService.loginUser(loginData);
+
+  res.cookie('token', result.accessToken, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: true,
+    path: '/',
+  });
+  res.cookie('refreshToken', result.refreshToken, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: true,
+    path: '/',
+  });
+  res.cookie('userName', result.userName, {
+    path: '/',
+  });
+  res.cookie('email', result.email, {
+    path: '/',
+  });
+
+  sendResponse<ILoginUserResponse>(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User Login successfully!',
     data: result,
   });
 });
@@ -44,6 +75,7 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 
 export const UserController = {
   createUser,
+  loginUser,
   getAllUsers,
   getSingleUser,
 };
