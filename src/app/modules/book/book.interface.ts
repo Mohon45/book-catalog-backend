@@ -11,3 +11,11 @@ export type IBook = {
   publicationDate: string;
   reviews?: Reviews[];
 };
+
+export type IBookFilters = {
+  searchTerm?: string;
+  title?: string;
+  author?: string;
+  genre?: string;
+  publicationDate?: number;
+};
