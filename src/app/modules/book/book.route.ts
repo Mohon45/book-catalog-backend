@@ -9,7 +9,7 @@ router.post(
   validateRequest(BookValidation.createBookZodSchema),
   BookController.createBook
 );
-// router.get('/:id', auth(), UserController.getSingleUser);
+router.get('/:id', BookController.getSingleBook);
 
 router.get('/', BookController.getAllBooks);
 
