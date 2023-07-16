@@ -1,15 +1,12 @@
-export type Reviews = {
-  name: string;
-  review: string;
-};
+import { Types } from 'mongoose';
+import { IUser } from '../user/user.interface';
 
 export type IBook = {
   title: string;
-  author: string;
-  image: string;
+  author: Types.ObjectId | IUser;
   genre: string;
   publicationDate: string;
-  reviews?: Reviews[];
+  reviews?: string[];
 };
 
 export type IBookFilters = {
@@ -17,5 +14,5 @@ export type IBookFilters = {
   title?: string;
   author?: string;
   genre?: string;
-  publicationDate?: number;
+  publicationYear?: number;
 };

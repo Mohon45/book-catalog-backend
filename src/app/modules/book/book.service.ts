@@ -31,13 +31,13 @@ const getAllBooks = async (filters: IBookFilters): Promise<IBook[]> => {
 
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
-  const result = await Book.find(whereConditions);
+  const result = await Book.find(whereConditions).populate('author');
 
   return result;
 };
 
 const getSingleBook = async (id: string): Promise<IBook | null> => {
-  const result = await Book.findOne({ _id: id });
+  const result = await Book.findOne({ _id: id }).populate('author');
   return result;
 };
 
@@ -48,6 +48,16 @@ const updateBook = async (
   const result = await Book.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
+  return result;
+};
+const bookReview = async (
+  id: string,
+  payload: string
+): Promise<IBook | null> => {
+  const result = await Book.findOneAndUpdate(
+    { _id: id },
+    { $push: { reviews: payload?.reviews } }
+  );
   return result;
 };
 
@@ -61,5 +71,6 @@ export const BookService = {
   getAllBooks,
   getSingleBook,
   updateBook,
+  bookReview,
   deleteBook,
 };

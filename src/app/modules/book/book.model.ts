@@ -11,11 +11,8 @@ const bookSchema = new Schema<IBook>(
       unique: true,
     },
     author: {
-      type: String,
-      required: true,
-    },
-    image: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'User',
       required: true,
     },
     genre: {
@@ -26,9 +23,11 @@ const bookSchema = new Schema<IBook>(
       type: String,
       required: true,
     },
-    reviews: {
-      type: String,
-    },
+    reviews: [
+      {
+        type: String,
+      },
+    ],
   },
   {
     timestamps: true,
