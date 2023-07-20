@@ -36,6 +36,13 @@ const getAllBooks = async (filters: IBookFilters): Promise<IBook[]> => {
   return result;
 };
 
+const getLatestBooks = async (): Promise<IBook[] | null> => {
+  const result = await Book.find({})
+    .sort({ _id: -1 })
+    .limit(10)
+    .populate('author');
+  return result;
+};
 const getSingleBook = async (id: string): Promise<IBook | null> => {
   const result = await Book.findOne({ _id: id }).populate('author');
   return result;
@@ -69,6 +76,7 @@ const deleteBook = async (id: string): Promise<IBook | null> => {
 export const BookService = {
   createBook,
   getAllBooks,
+  getLatestBooks,
   getSingleBook,
   updateBook,
   bookReview,
